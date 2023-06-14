@@ -12,7 +12,7 @@ var app = express();
 
 const User = require('./models/user.js')
 
-mongoose.connect("mongodb://0.0.0.0:27017/RegisterLoginPPPP");
+const connectDB = mongoose.connect("mongodb://0.0.0.0:27017/RegisterLoginPPPP");
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -101,5 +101,10 @@ function isLoggedIn(req, res, next) {
 
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
-	console.log("Server Has Started!");
+	console.log(`Server is running on : ${port}`);
+    connectDB.then(() =>{
+        console.log(`DB Connected!`)
+    }).catch((e)=>{
+        console.log(e);
+    })
 });
